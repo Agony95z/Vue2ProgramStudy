@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <p>{{counter}}</p>
+    <p k-text="counter"></p>
+    <p k-html="desc"></p>
+  </div>
+  <script src='./kvue.js'></script>
+  <script>
+    const app = new KVue({
+      el: '#app',
+      data: {
+        counter: 1,
+        desc: '<p>张卫海<span style="color:red;">nice</span></p>'
+      },
+      // 省略生成ast语法树步骤 自己写一个render()
+      render(h) {
+        /* let h1 = document.createElement('h1')
+        h1.innerText = this.counter + ''
+        return h1 */
+        // vnode 方案
+        return h('h1',{}, this.counter + '')
+        // return h('h1',{}, [
+        //   h('p', {}, this.counter + ''),
+        //   h('p', {}, this.counter * 2 + ''),
+        //   h('p', {}, this.counter * 3 + '')
+        // ])
+      }
+    })
+    setInterval(() => {
+      app.counter++
+    }, 1000);
+  </script>
+</body>
+</html>
